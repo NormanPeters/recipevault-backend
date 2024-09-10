@@ -18,7 +18,18 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Recipe> recipes;
 
-    // Getters and setters...
+    public User() {
+
+    }
+
+    public User(String username, String password, String email, List<Recipe> recipes) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.recipes = recipes;
+    }
+
+    // Getters and setters
     public Long getUserId() {
         return userId;
     }
