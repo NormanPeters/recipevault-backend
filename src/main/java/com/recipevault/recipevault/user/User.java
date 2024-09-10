@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -22,14 +23,12 @@ public class User {
 
     }
 
-    public User(String username, String password, String email, List<Recipe> recipes) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.recipes = recipes;
     }
 
-    // Getters and setters
     public Long getUserId() {
         return userId;
     }
