@@ -1,11 +1,11 @@
 package com.recipevault.recipevault.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,16 +13,17 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JWTService jwtService;
+    private final AuthenticationManager authManager;
+    private final BCryptPasswordEncoder encoder;
 
-    @Autowired
-    private JWTService jwtService;
-
-    @Autowired
-    AuthenticationManager authManager;
-
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    public UserService(UserRepository userRepository, JWTService jwtService, AuthenticationManager authManager) {
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.authManager = authManager;
+        this.encoder = new BCryptPasswordEncoder(12);
+    }
 
     /**
      * Registers a new user. The user's password is encrypted before saving.
@@ -30,7 +31,7 @@ public class UserService {
      * @param user the user to be registered
      * @return the registered user
      */
-    public Users register(Users user) {
+    public Users register(@NonNull Users user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         return user;
@@ -42,8 +43,9 @@ public class UserService {
      * @param user the user to be verified
      * @return a JWT token if the user is authenticated, or "fail" if the user is not authenticated
      */
-    public String verify(Users user) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+    public String verify(@NonNull Users user) {
+        Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(user.getUsername());
         } else {
@@ -57,7 +59,7 @@ public class UserService {
      * @param id the ID of the user to be retrieved
      * @return an Optional containing the user if found, or empty if not found
      */
-    public Optional<Users> getUserById(Long id) {
+    public Optional<Users> getUserById(@NonNull Long id) {
         return userRepository.findById(id);
     }
 
@@ -75,7 +77,7 @@ public class UserService {
      *
      * @param id the ID of the user to be deleted
      */
-    public void deleteUserById(Long id) {
+    public void deleteUserById(@NonNull Long id) {
         userRepository.deleteById(id);
     }
 }
