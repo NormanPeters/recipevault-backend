@@ -17,9 +17,38 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("csrf-token")
+    /**
+     * Retrieves the CSRF token.
+     *
+     * @param token the HttpServletRequest
+     * @return the CSRF token
+     */
+    @GetMapping("/csrf-token")
     public CsrfToken getCsrfToken(HttpServletRequest token) {
         return (CsrfToken) token.getAttribute("_csrf");
+    }
+
+    /**
+     * Registers a new user. The user's password is encrypted before saving.
+     *
+     * @param user the user to be registered
+     * @return the registered user
+     */
+    @PostMapping("/register")
+    public Users register(@RequestBody Users user) {
+        return userService.register(user);
+
+    }
+
+    /**
+     * Verifies a user's login credentials.
+     *
+     * @param user the user to be verified
+     * @return a JWT token if the user is authenticated, or "fail" if the user is not authenticated
+     */
+    @PostMapping("/login")
+    public String login(@RequestBody Users user) {
+        return userService.verify(user);
     }
 
     /**
@@ -29,9 +58,9 @@ public class UserController {
      * @return a ResponseEntity containing the created user and HTTP status CREATED, or BAD_REQUEST if the username already exists
      */
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<Users> createUser(@RequestBody Users user) {
         try {
-            User createdUser = userService.createUser(user);
+            Users createdUser = userService.createUser(user);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -45,8 +74,8 @@ public class UserController {
      * @return a ResponseEntity containing the user and HTTP status OK, or NOT_FOUND if the user does not exist
      */
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getUserById(id);
+    public ResponseEntity<Users> getUserById(@PathVariable Long id) {
+        Optional<Users> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -56,7 +85,7 @@ public class UserController {
      * @return a list of all users
      */
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 
