@@ -2,6 +2,7 @@ package com.recipevault.recipevault.user;
 
 import com.recipevault.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity

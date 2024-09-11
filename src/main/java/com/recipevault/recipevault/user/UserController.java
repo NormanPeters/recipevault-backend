@@ -52,22 +52,6 @@ public class UserController {
     }
 
     /**
-     * Creates a new user. If the username already exists, returns a BAD_REQUEST response.
-     *
-     * @param user the user to be created
-     * @return a ResponseEntity containing the created user and HTTP status CREATED, or BAD_REQUEST if the username already exists
-     */
-    @PostMapping
-    public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        try {
-            Users createdUser = userService.createUser(user);
-            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    /**
      * Retrieves a user by their ID.
      *
      * @param id the ID of the user to be retrieved
