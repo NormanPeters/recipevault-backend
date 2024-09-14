@@ -37,7 +37,7 @@ public class UserController {
      * @return the registered user
      */
     @PostMapping("/register")
-    public Users register(@RequestBody Users user) {
+    public User register(@RequestBody User user) {
         return userService.register(user);
     }
 
@@ -48,7 +48,7 @@ public class UserController {
      * @return a JWT token if the user is authenticated, or "fail" if the user is not authenticated
      */
     @PostMapping("/login")
-    public String login(@RequestBody Users user) {
+    public String login(@RequestBody User user) {
         return userService.verify(user);
     }
 
@@ -59,8 +59,8 @@ public class UserController {
      * @return a ResponseEntity containing the user and HTTP status OK, or NOT_FOUND if the user does not exist
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable Long id) {
-        Optional<Users> user = userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -70,7 +70,7 @@ public class UserController {
      * @return a list of all users
      */
     @GetMapping
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 

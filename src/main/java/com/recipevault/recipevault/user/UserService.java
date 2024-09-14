@@ -31,7 +31,7 @@ public class UserService {
      * @param user the user to be registered
      * @return the registered user
      */
-    public Users register(@NonNull Users user) {
+    public User register(@NonNull User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         return user;
@@ -43,7 +43,7 @@ public class UserService {
      * @param user the user to be verified
      * @return a JWT token if the user is authenticated, or "fail" if the user is not authenticated
      */
-    public String verify(@NonNull Users user) {
+    public String verify(@NonNull User user) {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
@@ -59,7 +59,7 @@ public class UserService {
      * @param id the ID of the user to be retrieved
      * @return an Optional containing the user if found, or empty if not found
      */
-    public Optional<Users> getUserById(@NonNull Long id) {
+    public Optional<User> getUserById(@NonNull Long id) {
         return userRepository.findById(id);
     }
 
@@ -68,7 +68,7 @@ public class UserService {
      *
      * @return a list of all users
      */
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 

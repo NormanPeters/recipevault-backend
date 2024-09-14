@@ -3,7 +3,7 @@ package com.recipevault.recipevault.recipe;
 import com.recipevault.recipevault.ingredient.Ingredient;
 import com.recipevault.recipevault.nutritionalValue.NutritionalValue;
 import com.recipevault.recipevault.recipeStep.RecipeStep;
-import com.recipevault.recipevault.user.Users;
+import com.recipevault.recipevault.user.User;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class Recipe {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private User user;
 
     private String imageUrl;
     private String title;
@@ -41,11 +41,11 @@ public class Recipe {
         this.recipeId = recipeId;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
