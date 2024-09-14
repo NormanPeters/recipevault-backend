@@ -1,5 +1,6 @@
 package com.recipevault.recipevault.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.recipevault.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
 
@@ -13,17 +14,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Recipe> recipes;
 
-    public Long getUserId() {
+    public Long getId() {
         return id;
     }
 
-    public void setUserId(Long userId) {
+    public void setId(Long userId) {
         this.id = userId;
     }
 

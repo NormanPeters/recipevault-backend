@@ -1,6 +1,7 @@
 package com.recipevault.recipevault.user;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
@@ -75,11 +76,17 @@ public class UserController {
     }
 
     /**
-     * Deletes a user by their ID.
+     * Deletes a user by their username.
      */
-    @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable Long id) {
-        userService.deleteUserById(id);
+    @DeleteMapping("/{username}")
+    public ResponseEntity<String> deleteUserByUsername(@PathVariable String username) {
+        try {
+            userService.deleteByUsername(username);
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
+
 

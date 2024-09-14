@@ -1,5 +1,6 @@
 package com.recipevault.recipevault.user;
 
+import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -73,11 +74,23 @@ public class UserService {
     }
 
     /**
-     * Deletes a user by their ID.
+     * Deletes a user by their username.
      *
-     * @param id the ID of the user to be deleted
+     * @param username the username of the user to be deleted
+     * @throws RuntimeException if the user is not found
      */
-    public void deleteUserById(@NonNull Long id) {
-        userRepository.deleteById(id);
+
+    @Transactional
+    public void deleteByUsername(@NonNull String username) {
+        // Find user by username
+        User user = userRepository.findByUsername(username);
+
+        // If user does not exist, throw an exception
+        if (user == null) {
+            throw new RuntimeException("User with username: " + username + " not found");
+        }
+
+        // Proceed to delete the user
+        userRepository.deleteByUsername(username);
     }
 }

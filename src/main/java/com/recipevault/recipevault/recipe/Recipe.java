@@ -1,5 +1,6 @@
 package com.recipevault.recipevault.recipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.recipevault.recipevault.ingredient.Ingredient;
 import com.recipevault.recipevault.nutritionalValue.NutritionalValue;
 import com.recipevault.recipevault.recipeStep.RecipeStep;
@@ -16,6 +17,7 @@ public class Recipe {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     private String imageUrl;
