@@ -79,18 +79,12 @@ public class UserService {
      * @param username the username of the user to be deleted
      * @throws RuntimeException if the user is not found
      */
-
     @Transactional
     public void deleteByUsername(@NonNull String username) {
-        // Find user by username
         User user = userRepository.findByUsername(username);
-
-        // If user does not exist, throw an exception
         if (user == null) {
             throw new RuntimeException("User with username: " + username + " not found");
         }
-
-        // Proceed to delete the user
         userRepository.deleteByUsername(username);
     }
 }

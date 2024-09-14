@@ -9,6 +9,5 @@ import java.util.Optional;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     Optional<Recipe> findByTitleAndUserId(String title, Long userId);
-    Recipe findByTitle(String title);
     List<Recipe> findAllByUserId(Long userId);
 }

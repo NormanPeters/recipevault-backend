@@ -1,9 +1,8 @@
 package com.recipevault.recipevault.recipe;
 
 import com.recipevault.recipevault.user.User;
-import com.recipevault.recipevault.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +11,7 @@ public class RecipeService {
 
     private final RecipeRepository recipeRepository;
 
-    public RecipeService(RecipeRepository recipeRepository, UserRepository userRepository) {
+    public RecipeService(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 
