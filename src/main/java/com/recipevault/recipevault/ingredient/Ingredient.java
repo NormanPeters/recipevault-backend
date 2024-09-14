@@ -1,5 +1,6 @@
 package com.recipevault.recipevault.ingredient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.recipevault.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
 
@@ -16,9 +17,9 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
+    @JsonBackReference // This helps to prevent infinite recursion during serialization
     private Recipe recipe;
 
-    // Getters and setters
     public Long getIngredientId() {
         return ingredientId;
     }
