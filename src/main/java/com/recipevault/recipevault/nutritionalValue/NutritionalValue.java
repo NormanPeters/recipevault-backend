@@ -1,5 +1,6 @@
 package com.recipevault.recipevault.nutritionalValue;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.recipevault.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
 
@@ -15,6 +16,7 @@ public class NutritionalValue {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
+    @JsonBackReference
     private Recipe recipe;
 
     // Getters and setters
