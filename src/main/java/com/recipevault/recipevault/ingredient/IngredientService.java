@@ -34,7 +34,7 @@ public class IngredientService {
      * @return A list of all ingredients associated with the specified recipe.
      */
     public List<Ingredient> getAllIngredientsByRecipeId(Long recipeId) {
-        return ingredientRepository.findAllByRecipe_User_Id(recipeId);
+        return ingredientRepository.findAllByRecipe_RecipeId(recipeId);
     }
 
     /**

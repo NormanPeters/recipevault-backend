@@ -11,4 +11,7 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     // Get all ingredients by the user ID via recipe ownership
     List<Ingredient> findAllByRecipe_User_Id(Long userId);
+
+    // Get all ingredients by the recipe ID
+    List<Ingredient> findAllByRecipe_RecipeId(Long recipeId);
 }
