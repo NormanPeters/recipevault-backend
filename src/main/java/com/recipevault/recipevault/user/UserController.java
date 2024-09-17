@@ -2,7 +2,9 @@ package com.recipevault.recipevault.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +45,33 @@ public class UserController {
     }
 
     /**
-     * Verifies a user's login credentials.
+     * Verifies a user's login credentials and sets a JWT as an HttpOnly cookie.
      *
      * @param user the user to be verified
-     * @return a JWT token if the user is authenticated, or "fail" if the user is not authenticated
+     * @return a ResponseEntity with the JWT in an HttpOnly cookie, or "fail" if the user is not authenticated
      */
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.verify(user);
+    public ResponseEntity<String> login(@RequestBody User user) {
+        // Authentifizieren des Benutzers und JWT erzeugen
+        String jwt = userService.verify(user);
+
+        if (jwt == null) {
+            return new ResponseEntity<>("Login failed", HttpStatus.UNAUTHORIZED);
+        }
+
+        // JWT in einem HttpOnly-Cookie speichern
+        ResponseCookie jwtCookie = ResponseCookie.from("jwt", jwt)
+                .httpOnly(true)     // Verhindert den Zugriff per JavaScript (sicher vor XSS)
+                .secure(true)       // Nur über HTTPS übertragbar (true)
+                .path("/")          // Gilt für die gesamte Domain
+                .maxAge(24 * 60 * 60) // 24 Stunden gültig
+                .sameSite("Strict")  // Verhindert, dass das Cookie in fremden Kontexts gesendet wird (CSRF-Schutz)
+                .build();
+
+        // JWT als Cookie im Header der Response senden
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body("Login successful");
     }
 
     /**

@@ -13,6 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +36,9 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(@NonNull HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .cors(Customizer.withDefaults())  // CORS aktivieren
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/users/register", "/api/users/login").permitAll()
                         .anyRequest().authenticated())
@@ -50,7 +55,7 @@ public class SecurityConfig {
      */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);  // Just keep the password encoder bean
+        return new BCryptPasswordEncoder(12);
     }
 
     /**
@@ -63,5 +68,23 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(@NonNull AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    /**
+     * Global CORS filter for handling CORS requests.
+     * This ensures CORS configuration is applied globally.
+     *
+     * @return the CorsFilter
+     */
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:3000");  // Erlaubt Frontend-Origin
+        config.addAllowedHeader("*");  // Erlaubt alle Header
+        config.addAllowedMethod("*");  // Erlaubt alle HTTP-Methoden
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }
