@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -46,55 +48,22 @@ public class UserController {
     }
 
     /**
-     * Verifies a user's login credentials and sets a JWT as an HttpOnly cookie.
+     * Verifies a user's login credentials.
      *
      * @param user the user to be verified
-     * @return a ResponseEntity with the JWT in an HttpOnly cookie, or "fail" if the user is not authenticated
+     * @return a JWT token if the user is authenticated, or null if the user is not authenticated
      */
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-        // Authentifizieren des Benutzers und JWT erzeugen
-        String jwt = userService.verify(user);
+    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
+        String token = userService.verify(user);
 
-        if (jwt == null) {
-            return new ResponseEntity<>("Login failed", HttpStatus.UNAUTHORIZED);
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        // JWT in einem HttpOnly-Cookie speichern
-        ResponseCookie jwtCookie = ResponseCookie.from("jwt", jwt)
-                .httpOnly(true)     // Verhindert den Zugriff per JavaScript (sicher vor XSS)
-                .secure(true)       // Nur über HTTPS übertragbar (true)
-                .path("/")          // Gilt für die gesamte Domain
-                .maxAge(24 * 60 * 60) // 24 Stunden gültig
-                .sameSite("Strict")  // Verhindert, dass das Cookie in fremden Kontexts gesendet wird (CSRF-Schutz)
-                .build();
-
-        // JWT als Cookie im Header der Response senden
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body("Login successful");
-    }
-
-    /**
-     * Logs out a user by clearing the JWT cookie.
-     *
-     * @param response the HttpServletResponse
-     * @return a ResponseEntity with a message indicating the logout was successful
-     */
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        // Clear the JWT cookie on the server-side
-        ResponseCookie cookie = ResponseCookie.from("jwt", "")
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(0)  // Expire immediately
-                .sameSite("Strict")
-                .build();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logout successful");
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return ResponseEntity.ok(response);
     }
 
     /**
