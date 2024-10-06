@@ -55,36 +55,11 @@ public class UserService {
     }
 
     /**
-     * Retrieves a user by their ID.
-     *
-     * @param id the ID of the user to be retrieved
-     * @return an Optional containing the user if found, or empty if not found
-     */
-    public Optional<User> getUserById(@NonNull Long id) {
-        return userRepository.findById(id);
-    }
-
-    /**
      * Retrieves all users.
      *
      * @return a list of all users
      */
     public List<User> getAllUsers() {
         return userRepository.findAll();
-    }
-
-    /**
-     * Deletes a user by their username.
-     *
-     * @param username the username of the user to be deleted
-     * @throws RuntimeException if the user is not found
-     */
-    @Transactional
-    public void deleteByUsername(@NonNull String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new RuntimeException("User with username: " + username + " not found");
-        }
-        userRepository.deleteByUsername(username);
     }
 }

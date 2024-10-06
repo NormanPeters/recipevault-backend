@@ -1,11 +1,7 @@
 package com.recipevault.recipevault.user;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -23,17 +18,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    /**
-     * Retrieves the CSRF token.
-     *
-     * @param token the HttpServletRequest
-     * @return the CSRF token
-     */
-    @GetMapping("/csrf-token")
-    public CsrfToken getCsrfToken(HttpServletRequest token) {
-        return (CsrfToken) token.getAttribute("_csrf");
     }
 
     /**
@@ -67,18 +51,6 @@ public class UserController {
     }
 
     /**
-     * Retrieves a user by their ID.
-     *
-     * @param id the ID of the user to be retrieved
-     * @return a ResponseEntity containing the user and HTTP status OK, or NOT_FOUND if the user does not exist
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    /**
      * Retrieves all users.
      *
      * @return a list of all users
@@ -88,17 +60,16 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+
     /**
-     * Deletes a user by their username.
+     * Retrieves the CSRF token.
+     *
+     * @param token the HttpServletRequest
+     * @return the CSRF token
      */
-    @DeleteMapping("/{username}")
-    public ResponseEntity<String> deleteUserByUsername(@PathVariable String username) {
-        try {
-            userService.deleteByUsername(username);
-            return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest token) {
+        return (CsrfToken) token.getAttribute("_csrf");
     }
 }
 
