@@ -24,11 +24,12 @@ public class RecipeController {
     }
 
     /**
-     * Helper method to extract the authenticated user from the JWT token.
+     * Retrieve all recipes for the authenticated user.
      */
-    private User getAuthenticatedUser(Authentication authentication) {
-        String username = authentication.getName();
-        return userRepository.findByUsername(username);
+    @GetMapping("/user/recipe")
+    public List<Recipe> getRecipesByUserId(Authentication authentication) {
+        User user = getAuthenticatedUser(authentication);
+        return recipeService.getRecipesByUserId(user.getId());
     }
 
     /**
@@ -54,12 +55,16 @@ public class RecipeController {
     }
 
     /**
-     * Retrieve all recipes for the authenticated user.
+     * Search for a recipe by title for the authenticated user.
      */
-    @GetMapping("/user/recipe")
-    public List<Recipe> getRecipesByUserId(Authentication authentication) {
+    @GetMapping("/recipe/title")
+    public ResponseEntity<Recipe> searchRecipeByTitle(@RequestParam String title, Authentication authentication) {
         User user = getAuthenticatedUser(authentication);
-        return recipeService.getRecipesByUserId(user.getId());
+        Optional<Recipe> recipe = recipeService.findByTitleForUser(title, user);
+        if (recipe.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(recipe.get());
     }
 
     /**
@@ -95,15 +100,10 @@ public class RecipeController {
     }
 
     /**
-     * Search for a recipe by title for the authenticated user.
+     * Helper method to extract the authenticated user from the JWT token.
      */
-    @GetMapping("/recipe/search")
-    public ResponseEntity<Recipe> searchRecipeByTitle(@RequestParam String title, Authentication authentication) {
-        User user = getAuthenticatedUser(authentication);
-        Optional<Recipe> recipe = recipeService.findByTitleForUser(title, user);
-        if (recipe.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(recipe.get());
+    private User getAuthenticatedUser(Authentication authentication) {
+        String username = authentication.getName();
+        return userRepository.findByUsername(username);
     }
 }

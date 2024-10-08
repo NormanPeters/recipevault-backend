@@ -106,4 +106,34 @@ public class Recipe {
     public void setSteps(List<RecipeStep> steps) {
         this.steps = steps;
     }
+
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+        ingredient.setRecipe(this);
+    }
+
+    public void removeIngredient(Ingredient ingredient) {
+        ingredients.remove(ingredient);
+        ingredient.setRecipe(null);
+    }
+
+    public void addNutritionalValue(NutritionalValue nutritionalValue) {
+        nutritionalValues.add(nutritionalValue);
+        nutritionalValue.setRecipe(this);
+    }
+
+    public void removeNutritionalValue(NutritionalValue nutritionalValue) {
+        nutritionalValues.remove(nutritionalValue);
+        nutritionalValue.setRecipe(null);
+    }
+
+    public void addStep(RecipeStep step) {
+        steps.add(step);
+        step.setRecipe(this);
+    }
+
+    public void removeStep(RecipeStep step) {
+        steps.remove(step);
+        step.setRecipe(null);
+    }
 }

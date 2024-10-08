@@ -26,17 +26,6 @@ public class RecipeStepController {
     }
 
     /**
-     * Retrieve the authenticated user based on the provided authentication token.
-     *
-     * @param authentication the authentication token
-     * @return the authenticated user
-     */
-    private User getAuthenticatedUser(Authentication authentication) {
-        String username = authentication.getName();
-        return userRepository.findByUsername(username);
-    }
-
-    /**
      * Create a new recipe step and add it to a recipe for the authenticated user.
      *
      * @param recipeId       the ID of the recipe
@@ -152,5 +141,16 @@ public class RecipeStepController {
         User user = getAuthenticatedUser(authentication);
         List<RecipeStep> recipeSteps = recipeStepService.getAllRecipeStepsByUserId(user.getId());
         return ResponseEntity.ok(recipeSteps);
+    }
+
+    /**
+     * Retrieve the authenticated user based on the provided authentication token.
+     *
+     * @param authentication the authentication token
+     * @return the authenticated user
+     */
+    private User getAuthenticatedUser(Authentication authentication) {
+        String username = authentication.getName();
+        return userRepository.findByUsername(username);
     }
 }

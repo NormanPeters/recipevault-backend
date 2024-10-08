@@ -16,10 +16,23 @@ public class RecipeService {
     }
 
     /**
+     * Retrieve all recipes for a specific user.
+     */
+    public List<Recipe> getRecipesByUserId(Long userId) {
+        return recipeRepository.findAllByUserId(userId);
+    }
+
+    /**
      * Create a new recipe for a specific user.
      */
     public Recipe createRecipe(Recipe recipe, User user) {
         recipe.setUser(user);
+
+        // Link ingredients, nutritional values, and steps to the recipe
+        recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
+        recipe.getNutritionalValues().forEach(nutritionalValue -> nutritionalValue.setRecipe(recipe));
+        recipe.getSteps().forEach(step -> step.setRecipe(recipe));
+
         return recipeRepository.save(recipe);
     }
 
@@ -33,13 +46,6 @@ public class RecipeService {
         } else {
             throw new RuntimeException("Recipe not found for ID: " + id);
         }
-    }
-
-    /**
-     * Retrieve all recipes for a specific user.
-     */
-    public List<Recipe> getRecipesByUserId(Long userId) {
-        return recipeRepository.findAllByUserId(userId);
     }
 
     /**
@@ -57,9 +63,16 @@ public class RecipeService {
         recipe.setDescription(recipeDetails.getDescription());
         recipe.setImageUrl(recipeDetails.getImageUrl());
         recipe.setFavourite(recipeDetails.getFavourite());
-        recipe.setIngredients(recipeDetails.getIngredients());
-        recipe.setNutritionalValues(recipeDetails.getNutritionalValues());
-        recipe.setSteps(recipeDetails.getSteps());
+
+        // Clear existing ingredients, nutritional values, and steps before updating
+        recipe.getIngredients().clear();
+        recipe.getNutritionalValues().clear();
+        recipe.getSteps().clear();
+
+        // Re-add the new ingredients, nutritional values, and steps
+        recipeDetails.getIngredients().forEach(recipe::addIngredient);
+        recipeDetails.getNutritionalValues().forEach(recipe::addNutritionalValue);
+        recipeDetails.getSteps().forEach(recipe::addStep);
 
         return recipeRepository.save(recipe);
     }
