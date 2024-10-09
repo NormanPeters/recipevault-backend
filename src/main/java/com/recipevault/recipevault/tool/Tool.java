@@ -1,0 +1,54 @@
+package com.recipevault.recipevault.tool;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.recipevault.recipevault.recipe.Recipe;
+import jakarta.persistence.*;
+
+@Entity
+public class Tool {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long toolId;
+
+    private String title;
+    private Double amount;
+
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    @JsonBackReference // Prevents infinite recursion during serialization
+    private Recipe recipe;
+
+    // Getters and Setters
+    public Long getToolId() {
+        return toolId;
+    }
+
+    public void setToolId(Long toolId) {
+        this.toolId = toolId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+}

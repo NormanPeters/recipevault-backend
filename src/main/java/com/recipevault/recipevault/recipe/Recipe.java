@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.recipevault.recipevault.ingredient.Ingredient;
 import com.recipevault.recipevault.nutritionalValue.NutritionalValue;
 import com.recipevault.recipevault.recipeStep.RecipeStep;
+import com.recipevault.recipevault.tool.Tool;
 import com.recipevault.recipevault.user.User;
 import jakarta.persistence.*;
 import java.util.List;
@@ -33,6 +34,9 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<RecipeStep> steps;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<Tool> tools;
 
     // Getters and setters
     public Long getRecipeId() {
@@ -107,6 +111,14 @@ public class Recipe {
         this.steps = steps;
     }
 
+    public List<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(List<Tool> tools) {
+        this.tools = tools;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
         ingredient.setRecipe(this);
@@ -136,4 +148,15 @@ public class Recipe {
         steps.remove(step);
         step.setRecipe(null);
     }
+
+    public void addTool(Tool tool) {
+        tools.add(tool);
+        tool.setRecipe(this);
+    }
+
+    public void removeTool(Tool tool) {
+        tools.remove(tool);
+        tool.setRecipe(null);
+    }
+
 }
