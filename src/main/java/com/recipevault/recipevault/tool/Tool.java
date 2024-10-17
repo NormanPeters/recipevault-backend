@@ -12,7 +12,7 @@ public class Tool {
     private Long toolId;
 
     private String title;
-    private Double amount;
+    private Integer amount;
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
@@ -36,11 +36,11 @@ public class Tool {
         this.title = title;
     }
 
-    public Double getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 

@@ -64,6 +64,10 @@ public class RecipeService {
         recipe.setDescription(recipeDetails.getDescription());
         recipe.setImageUrl(recipeDetails.getImageUrl());
         recipe.setFavourite(recipeDetails.getFavourite());
+        recipe.setTime(recipeDetails.getTime());
+        recipe.setSourceUrl(recipeDetails.getSourceUrl());
+        recipe.setServings(recipeDetails.getServings());
+        recipe.setPortionSize(recipeDetails.getPortionSize());
 
         // Clear existing ingredients, nutritional values, and steps before updating
         recipe.getIngredients().clear();

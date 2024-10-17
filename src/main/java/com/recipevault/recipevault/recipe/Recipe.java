@@ -21,10 +21,14 @@ public class Recipe {
     @JsonIgnore
     private User user;
 
-    private String imageUrl;
     private String title;
     private String description;
+    private String imageUrl;
     private Boolean isFavourite;
+    private String time;
+    private String sourceUrl;
+    private int servings;
+    private int portionSize;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
@@ -85,6 +89,38 @@ public class Recipe {
 
     public void setFavourite(Boolean favourite) {
         isFavourite = favourite;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String duration) {
+        this.time = duration;
+    }
+
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public int getPortionSize() {
+        return portionSize;
+    }
+
+    public void setPortionSize(int portionSize) {
+        this.portionSize = portionSize;
     }
 
     public List<Ingredient> getIngredients() {
