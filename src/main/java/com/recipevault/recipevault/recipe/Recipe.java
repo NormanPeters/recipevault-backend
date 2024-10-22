@@ -24,7 +24,7 @@ public class Recipe {
     private String title;
     private String description;
     private String imageUrl;
-    private Boolean isFavourite;
+    private Boolean favorite;
     private String time;
     private String sourceUrl;
     private int servings;
@@ -83,12 +83,12 @@ public class Recipe {
         this.description = description;
     }
 
-    public Boolean getFavourite() {
-        return isFavourite;
+    public Boolean getFavorite() {
+        return favorite;
     }
 
-    public void setFavourite(Boolean favourite) {
-        isFavourite = favourite;
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 
     public String getTime() {

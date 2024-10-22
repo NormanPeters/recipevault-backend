@@ -63,7 +63,7 @@ public class RecipeService {
         recipe.setTitle(recipeDetails.getTitle());
         recipe.setDescription(recipeDetails.getDescription());
         recipe.setImageUrl(recipeDetails.getImageUrl());
-        recipe.setFavourite(recipeDetails.getFavourite());
+        recipe.setFavorite(recipeDetails.getFavorite());
         recipe.setTime(recipeDetails.getTime());
         recipe.setSourceUrl(recipeDetails.getSourceUrl());
         recipe.setServings(recipeDetails.getServings());
