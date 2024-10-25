@@ -1,31 +1,31 @@
-package com.recipevault.recipevault.ingredient;
+package com.recipevault.recipevault.recipe.recipeComponents;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.recipevault.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
 
 @Entity
-public class Ingredient {
+public class NutritionalValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ingredientId;
+    private Long nutritionalValueId;
 
     private String title;
     private Double amount;
-    private String unit;
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
-    @JsonBackReference // This helps to prevent infinite recursion during serialization
+    @JsonBackReference
     private Recipe recipe;
 
-    public Long getIngredientId() {
-        return ingredientId;
+    // Getters and setters
+    public Long getNutritionalValueId() {
+        return nutritionalValueId;
     }
 
-    public void setIngredientId(Long ingredientId) {
-        this.ingredientId = ingredientId;
+    public void setNutritionalValueId(Long nutritionalValueId) {
+        this.nutritionalValueId = nutritionalValueId;
     }
 
     public String getTitle() {
@@ -42,14 +42,6 @@ public class Ingredient {
 
     public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 
     public Recipe getRecipe() {

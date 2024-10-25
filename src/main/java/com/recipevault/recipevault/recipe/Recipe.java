@@ -1,10 +1,10 @@
 package com.recipevault.recipevault.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.recipevault.recipevault.ingredient.Ingredient;
-import com.recipevault.recipevault.nutritionalValue.NutritionalValue;
-import com.recipevault.recipevault.recipeStep.RecipeStep;
-import com.recipevault.recipevault.tool.Tool;
+import com.recipevault.recipevault.recipe.recipeComponents.Ingredient;
+import com.recipevault.recipevault.recipe.recipeComponents.NutritionalValue;
+import com.recipevault.recipevault.recipe.recipeComponents.RecipeStep;
+import com.recipevault.recipevault.recipe.recipeComponents.Tool;
 import com.recipevault.recipevault.user.User;
 import jakarta.persistence.*;
 import java.util.List;

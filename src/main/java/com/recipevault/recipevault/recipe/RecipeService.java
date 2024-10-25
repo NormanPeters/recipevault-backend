@@ -97,11 +97,4 @@ public class RecipeService {
 
         recipeRepository.delete(recipe);
     }
-
-    /**
-     * Search for a recipe by title for the specific user.
-     */
-    public Optional<Recipe> findByTitleForUser(String title, User user) {
-        return recipeRepository.findByTitleAndUserId(title, user.getId());
-    }
 }

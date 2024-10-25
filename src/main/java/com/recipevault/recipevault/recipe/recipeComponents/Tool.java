@@ -1,4 +1,4 @@
-package com.recipevault.recipevault.tool;
+package com.recipevault.recipevault.recipe.recipeComponents;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.recipevault.recipevault.recipe.Recipe;

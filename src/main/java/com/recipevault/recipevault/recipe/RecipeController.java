@@ -14,7 +14,6 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class RecipeController {
 
-
     private final RecipeService recipeService;
     private final UserRepository userRepository;
 
@@ -52,19 +51,6 @@ public class RecipeController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         return ResponseEntity.ok(recipe);
-    }
-
-    /**
-     * Search for a recipe by title for the authenticated user.
-     */
-    @GetMapping("/recipe/title")
-    public ResponseEntity<Recipe> searchRecipeByTitle(@RequestParam String title, Authentication authentication) {
-        User user = getAuthenticatedUser(authentication);
-        Optional<Recipe> recipe = recipeService.findByTitleForUser(title, user);
-        if (recipe.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(recipe.get());
     }
 
     /**
