@@ -1,10 +1,8 @@
 package com.recipevault.recipevault.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.recipevault.recipevault.recipe.recipeComponents.Ingredient;
-import com.recipevault.recipevault.recipe.recipeComponents.NutritionalValue;
-import com.recipevault.recipevault.recipe.recipeComponents.RecipeStep;
-import com.recipevault.recipevault.recipe.recipeComponents.Tool;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.recipevault.recipevault.recipe.recipeComponents.*;
 import com.recipevault.recipevault.user.User;
 import jakarta.persistence.*;
 import java.util.List;
@@ -41,6 +39,15 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Tool> tools;
+
+    @ManyToMany
+    @JoinTable(
+            name = "recipe_tags",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @JsonManagedReference
+    private List<Tag> tags;
 
     // Getters and setters
     public Long getRecipeId() {
