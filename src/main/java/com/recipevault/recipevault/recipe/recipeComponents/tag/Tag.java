@@ -1,4 +1,4 @@
-package com.recipevault.recipevault.recipe.recipeComponents;
+package com.recipevault.recipevault.recipe.recipeComponents.tag;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.recipevault.recipevault.recipe.Recipe;
@@ -12,7 +12,8 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
-    private String title;
+    @Enumerated(EnumType.STRING)
+    private TagType tagType;
 
     @ManyToMany(mappedBy = "tags")
     @JsonBackReference
@@ -26,12 +27,12 @@ public class Tag {
         this.tagId = tagId;
     }
 
-    public String getTitle() {
-        return title;
+    public TagType getTagType() {
+        return tagType;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTagType(TagType tagType) {
+        this.tagType = tagType;
     }
 
     public List<Recipe> getRecipes() {

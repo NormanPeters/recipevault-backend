@@ -3,6 +3,7 @@ package com.recipevault.recipevault.recipe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.recipevault.recipevault.recipe.recipeComponents.*;
+import com.recipevault.recipevault.recipe.recipeComponents.tag.Tag;
 import com.recipevault.recipevault.user.User;
 import jakarta.persistence.*;
 import java.util.List;
