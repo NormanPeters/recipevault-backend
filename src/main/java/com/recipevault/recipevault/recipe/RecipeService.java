@@ -33,6 +33,7 @@ public class RecipeService {
         recipe.getNutritionalValues().forEach(nutritionalValue -> nutritionalValue.setRecipe(recipe));
         recipe.getSteps().forEach(step -> step.setRecipe(recipe));
         recipe.getTools().forEach(tool -> tool.setRecipe(recipe));
+        recipe.getTags().forEach(tag -> tag.setRecipe(recipe));
 
         return recipeRepository.save(recipe);
     }
@@ -74,12 +75,14 @@ public class RecipeService {
         recipe.getNutritionalValues().clear();
         recipe.getSteps().clear();
         recipe.getTools().clear();
+        recipe.getTags().clear();
 
         // Re-add the new ingredients, nutritional values, and steps
         recipeDetails.getIngredients().forEach(recipe::addIngredient);
         recipeDetails.getNutritionalValues().forEach(recipe::addNutritionalValue);
         recipeDetails.getSteps().forEach(recipe::addStep);
         recipeDetails.getTools().forEach(recipe::addTool);
+        recipeDetails.getTags().forEach(recipe::addTag);
 
         return recipeRepository.save(recipe);
     }
