@@ -2,42 +2,32 @@ package com.recipevault.recipevault.recipe.recipeComponents.tag;
 
 public enum TagType {
     // Nutrition tags
-    MEAT("Nutrition"),
-    FISH("Nutrition"),
-    VEGETARIAN("Nutrition"),
-    VEGAN("Nutrition"),
+    MEAT,
+    FISH,
+    VEGETARIAN,
+    VEGAN,
 
     // Difficulty tags
-    EASY("Difficulty"),
-    MEDIUM("Difficulty"),
-    HARD("Difficulty"),
+    EASY,
+    MEDIUM,
+    HARD,
 
     // Meal Type tags
-    APPETIZER("Meal Type"),
-    MAIN_COURSE("Meal Type"),
-    DESSERT("Meal Type"),
-    BREAKFAST("Meal Type"),
-    SOUP("Meal Type"),
-    CASSEROLE("Meal Type"),
-    SNACK("Meal Type"),
-    BEVERAGE("Meal Type"),
+    APPETIZER,
+    MAIN_COURSE,
+    DESSERT,
+    BREAKFAST,
+    SOUP,
+    CASSEROLE,
+    SNACK,
+    BEVERAGE,
 
     // Diet Type tags
-    LACTOSE_FREE("Diet Type"),
-    LOW_CARB("Diet Type"),
-    GLUTEN_FREE("Diet Type"),
-    PALEO("Diet Type"),
-    LOW_SUGAR("Diet Type"),
-    CLEAN_EATING("Diet Type");
-
-    private final String category;
-
-    TagType(String category) {
-        this.category = category;
-    }
-
-    public String getCategory() {
-        return category;
-    }
+    LACTOSE_FREE,
+    LOW_CARB,
+    GLUTEN_FREE,
+    PALEO,
+    LOW_SUGAR,
+    CLEAN_EATING;
 }
 

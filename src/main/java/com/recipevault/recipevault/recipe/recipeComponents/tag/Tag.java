@@ -3,7 +3,6 @@ package com.recipevault.recipevault.recipe.recipeComponents.tag;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.recipevault.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Tag {
@@ -15,10 +14,12 @@ public class Tag {
     @Enumerated(EnumType.STRING)
     private TagType tagType;
 
-    @ManyToMany(mappedBy = "tags")
-    @JsonBackReference
-    private List<Recipe> recipes;
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    @JsonBackReference // Prevents infinite recursion in JSON serialization
+    private Recipe recipe;
 
+    // Getters and Setters
     public Long getTagId() {
         return tagId;
     }
@@ -35,11 +36,11 @@ public class Tag {
         this.tagType = tagType;
     }
 
-    public List<Recipe> getRecipes() {
-        return recipes;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

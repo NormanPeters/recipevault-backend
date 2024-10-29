@@ -1,8 +1,10 @@
 package com.recipevault.recipevault.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.recipevault.recipevault.recipe.recipeComponents.*;
+import com.recipevault.recipevault.recipe.recipeComponents.Ingredient;
+import com.recipevault.recipevault.recipe.recipeComponents.NutritionalValue;
+import com.recipevault.recipevault.recipe.recipeComponents.RecipeStep;
+import com.recipevault.recipevault.recipe.recipeComponents.Tool;
 import com.recipevault.recipevault.recipe.recipeComponents.tag.Tag;
 import com.recipevault.recipevault.user.User;
 import jakarta.persistence.*;
@@ -41,13 +43,7 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Tool> tools;
 
-    @ManyToMany
-    @JoinTable(
-            name = "recipe_tags",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    @JsonManagedReference
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Tag> tags;
 
     // Getters and setters
@@ -163,14 +159,18 @@ public class Recipe {
         this.tools = tools;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    // Helper methods
     public void addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
         ingredient.setRecipe(this);
-    }
-
-    public void removeIngredient(Ingredient ingredient) {
-        ingredients.remove(ingredient);
-        ingredient.setRecipe(null);
     }
 
     public void addNutritionalValue(NutritionalValue nutritionalValue) {
@@ -178,19 +178,9 @@ public class Recipe {
         nutritionalValue.setRecipe(this);
     }
 
-    public void removeNutritionalValue(NutritionalValue nutritionalValue) {
-        nutritionalValues.remove(nutritionalValue);
-        nutritionalValue.setRecipe(null);
-    }
-
     public void addStep(RecipeStep step) {
         steps.add(step);
         step.setRecipe(this);
-    }
-
-    public void removeStep(RecipeStep step) {
-        steps.remove(step);
-        step.setRecipe(null);
     }
 
     public void addTool(Tool tool) {
@@ -198,9 +188,8 @@ public class Recipe {
         tool.setRecipe(this);
     }
 
-    public void removeTool(Tool tool) {
-        tools.remove(tool);
-        tool.setRecipe(null);
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.setRecipe(this);
     }
-
 }
