@@ -11,6 +11,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
+    @Enumerated(EnumType.STRING)
     private TagType tagType;
 
     @ManyToOne
