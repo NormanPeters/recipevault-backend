@@ -81,9 +81,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");  // Erlaubt Frontend-Origin
-        config.addAllowedHeader("*");  // Erlaubt alle Header
-        config.addAllowedMethod("*");  // Erlaubt alle HTTP-Methoden
+        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("https://recipevault-g0u3.onrender.com/");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
