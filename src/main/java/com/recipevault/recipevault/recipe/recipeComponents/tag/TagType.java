@@ -28,6 +28,6 @@ public enum TagType {
     GLUTEN_FREE,
     PALEO,
     LOW_SUGAR,
-    CLEAN_EATING;
+    CLEAN_EATING
 }
 
