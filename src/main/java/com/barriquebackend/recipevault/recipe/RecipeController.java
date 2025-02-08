@@ -31,15 +31,6 @@ public class RecipeController {
     }
 
     /**
-     * Create a new recipe for the authenticated user.
-     */
-    @PostMapping("/recipe")
-    public Recipe createRecipe(@RequestBody Recipe recipe, Authentication authentication) {
-        User user = getAuthenticatedUser(authentication);
-        return recipeService.createRecipe(recipe, user);
-    }
-
-    /**
      * Retrieve a recipe by ID.
      */
     @GetMapping("/recipe/{id}")
@@ -53,13 +44,21 @@ public class RecipeController {
     }
 
     /**
+     * Create a new recipe for the authenticated user.
+     */
+    @PostMapping("/recipe")
+    public Recipe createRecipe(@RequestBody Recipe recipe, Authentication authentication) {
+        User user = getAuthenticatedUser(authentication);
+        return recipeService.createRecipe(recipe, user);
+    }
+
+    /**
      * Update an existing recipe for the authenticated user.
      */
     @PutMapping("/recipe/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipeDetails, Authentication authentication) {
         User user = getAuthenticatedUser(authentication);
         Recipe recipe = recipeService.getRecipeById(id);
-
         if (!recipe.getUser().getId().equals(user.getId())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

@@ -1,4 +1,4 @@
-package com.barriquebackend.recipevault.recipe.recipeComponents;
+package com.barriquebackend.recipevault.recipe.components;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.barriquebackend.recipevault.recipe.Recipe;

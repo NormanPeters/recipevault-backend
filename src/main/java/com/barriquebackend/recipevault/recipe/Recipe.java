@@ -1,11 +1,11 @@
 package com.barriquebackend.recipevault.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.barriquebackend.recipevault.recipe.recipeComponents.Ingredient;
-import com.barriquebackend.recipevault.recipe.recipeComponents.NutritionalValue;
-import com.barriquebackend.recipevault.recipe.recipeComponents.RecipeStep;
-import com.barriquebackend.recipevault.recipe.recipeComponents.Tool;
-import com.barriquebackend.recipevault.recipe.recipeComponents.tag.Tag;
+import com.barriquebackend.recipevault.recipe.components.Ingredient;
+import com.barriquebackend.recipevault.recipe.components.NutritionalValue;
+import com.barriquebackend.recipevault.recipe.components.RecipeStep;
+import com.barriquebackend.recipevault.recipe.components.Tool;
+import com.barriquebackend.recipevault.recipe.components.tag.Tag;
 import com.barriquebackend.user.User;
 import jakarta.persistence.*;
 import java.util.List;

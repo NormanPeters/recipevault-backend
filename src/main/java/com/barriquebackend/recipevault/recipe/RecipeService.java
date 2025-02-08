@@ -23,6 +23,18 @@ public class RecipeService {
     }
 
     /**
+     * Retrieve a recipe by its ID.
+     */
+    public Recipe getRecipeById(Long id) {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+        if (recipe.isPresent()) {
+            return recipe.get();
+        } else {
+            throw new RuntimeException("Recipe not found for ID: " + id);
+        }
+    }
+
+    /**
      * Create a new recipe for a specific user.
      */
     public Recipe createRecipe(Recipe recipe, User user) {
@@ -36,18 +48,6 @@ public class RecipeService {
         recipe.getTags().forEach(tag -> tag.setRecipe(recipe));
 
         return recipeRepository.save(recipe);
-    }
-
-    /**
-     * Retrieve a recipe by its ID.
-     */
-    public Recipe getRecipeById(Long id) {
-        Optional<Recipe> recipe = recipeRepository.findById(id);
-        if (recipe.isPresent()) {
-            return recipe.get();
-        } else {
-            throw new RuntimeException("Recipe not found for ID: " + id);
-        }
     }
 
     /**

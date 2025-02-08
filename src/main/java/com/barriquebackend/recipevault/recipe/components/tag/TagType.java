@@ -1,4 +1,4 @@
-package com.barriquebackend.recipevault.recipe.recipeComponents.tag;
+package com.barriquebackend.recipevault.recipe.components.tag;
 
 public enum TagType {
     // Nutrition tags

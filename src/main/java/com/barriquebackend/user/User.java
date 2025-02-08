@@ -1,5 +1,6 @@
 package com.barriquebackend.user;
 
+import com.barriquebackend.bucksbuddy.journey.Journey;
 import com.barriquebackend.recipevault.recipe.Recipe;
 import jakarta.persistence.*;
 
@@ -19,6 +20,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Recipe> recipes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Journey> journeys;
 
     public Long getId() {
         return id;
@@ -44,11 +48,5 @@ public class User {
         this.password = password;
     }
 
-    public List<Recipe> getRecipes() {
-        return recipes;
-    }
 
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-    }
 }
