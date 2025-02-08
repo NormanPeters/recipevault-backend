@@ -24,16 +24,6 @@ public class Expenditure {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    public Expenditure() {
-    }
-
-    public Expenditure(String name, double amount, Journey journey) {
-        this.name = name;
-        this.amount = amount;
-        this.date = new Date();
-        this.journey = journey;
-    }
-
     public Long getExpenditureId() {
         return expenditureId;
     }

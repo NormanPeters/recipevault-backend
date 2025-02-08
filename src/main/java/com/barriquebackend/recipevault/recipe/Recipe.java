@@ -22,7 +22,9 @@ public class Recipe {
     @JsonIgnore
     private User user;
 
+    @Column(nullable = false)
     private String title;
+
     private String description;
     private String imageUrl;
     private Boolean favorite;

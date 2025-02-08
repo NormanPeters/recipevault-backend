@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing expenditures related to journeys.
+ * Provides endpoints to create, retrieve, update, and delete expenditures.
+ */
 @RestController
 @RequestMapping("/api")
 public class ExpenditureController {
@@ -20,6 +24,13 @@ public class ExpenditureController {
     private final JourneyService journeyService;
     private final UserRepository userRepository;
 
+    /**
+     * Constructs an ExpenditureController with the specified services and user repository.
+     *
+     * @param expenditureService the service for expenditure business logic
+     * @param journeyService     the service for journey business logic
+     * @param userRepository     the repository for user data
+     */
     @Autowired
     public ExpenditureController(ExpenditureService expenditureService, JourneyService journeyService, UserRepository userRepository) {
         this.expenditureService = expenditureService;
@@ -28,7 +39,11 @@ public class ExpenditureController {
     }
 
     /**
-     * Retrieve all expenditures for a given journey.
+     * Retrieves all expenditures for a given journey.
+     *
+     * @param journeyId      the ID of the journey
+     * @param authentication the authentication token containing user details
+     * @return a ResponseEntity with the list of expenditures if authorized, or an error status
      */
     @GetMapping("/journey/{journeyId}/expenditure")
     public ResponseEntity<List<Expenditure>> getAllExpendituresByJourneyId(@PathVariable Long journeyId,
@@ -43,7 +58,12 @@ public class ExpenditureController {
     }
 
     /**
-     * Retrieve an expenditure by its ID.
+     * Retrieves an expenditure by its ID for a given journey.
+     *
+     * @param journeyId      the ID of the journey
+     * @param expenditureId  the ID of the expenditure
+     * @param authentication the authentication token containing user details
+     * @return a ResponseEntity with the expenditure if found and authorized, or an error status
      */
     @GetMapping("/journey/{journeyId}/expenditure/{expenditureId}")
     public ResponseEntity<Expenditure> getExpenditureById(@PathVariable Long journeyId,
@@ -62,7 +82,12 @@ public class ExpenditureController {
     }
 
     /**
-     * Create a new expenditure for a given journey.
+     * Creates a new expenditure for a given journey.
+     *
+     * @param journeyId      the ID of the journey
+     * @param expenditure    the expenditure data to create
+     * @param authentication the authentication token containing user details
+     * @return a ResponseEntity with the created expenditure if successful, or an error status
      */
     @PostMapping("/journey/{journeyId}/expenditure")
     public ResponseEntity<Expenditure> createExpenditure(@PathVariable Long journeyId,
@@ -77,7 +102,13 @@ public class ExpenditureController {
     }
 
     /**
-     * Update an existing expenditure.
+     * Updates an existing expenditure for a given journey.
+     *
+     * @param journeyId      the ID of the journey
+     * @param expenditureId  the ID of the expenditure to update
+     * @param expenditure    the updated expenditure data
+     * @param authentication the authentication token containing user details
+     * @return a ResponseEntity with the updated expenditure if successful, or an error status
      */
     @PutMapping("/journey/{journeyId}/expenditure/{expenditureId}")
     public ResponseEntity<Expenditure> updateExpenditure(@PathVariable Long journeyId,
@@ -98,7 +129,12 @@ public class ExpenditureController {
     }
 
     /**
-     * Delete an expenditure.
+     * Deletes an expenditure for a given journey.
+     *
+     * @param journeyId      the ID of the journey
+     * @param expenditureId  the ID of the expenditure to delete
+     * @param authentication the authentication token containing user details
+     * @return a ResponseEntity with no content if deletion is successful, or an error status
      */
     @DeleteMapping("/journey/{journeyId}/expenditure/{expenditureId}")
     public ResponseEntity<Void> deleteExpenditure(@PathVariable Long journeyId,
@@ -118,7 +154,10 @@ public class ExpenditureController {
     }
 
     /**
-     * Helper method to extract the authenticated user.
+     * Helper method to extract the authenticated user from the security context.
+     *
+     * @param authentication the authentication token containing user details
+     * @return the authenticated User
      */
     private User getAuthenticatedUser(Authentication authentication) {
         String username = authentication.getName();
@@ -126,8 +165,11 @@ public class ExpenditureController {
     }
 
     /**
-     * Helper method to validate journey ownership.
-     * Returns the Journey if the authenticated user owns it; otherwise, returns an empty Optional.
+     * Helper method to verify that the specified journey is owned by the authenticated user.
+     *
+     * @param journeyId      the ID of the journey to verify
+     * @param authentication the authentication token containing user details
+     * @return an Optional containing the journey if ownership is confirmed, or an empty Optional otherwise
      */
     private Optional<Journey> getAuthorizedJourney(Long journeyId, Authentication authentication) {
         User user = getAuthenticatedUser(authentication);
