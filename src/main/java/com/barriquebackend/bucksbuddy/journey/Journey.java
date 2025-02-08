@@ -95,7 +95,7 @@ public class Journey {
         this.budget = budget;
     }
 
-    // Updated getter to return Date instead of String.
+    // Updated getter to return Date instead of String
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     public Date getStartDate() {
         return startDate;
@@ -105,7 +105,7 @@ public class Journey {
         this.startDate = startDate;
     }
 
-    // Updated getter to return Date instead of String.
+    // Updated getter to return Date instead of String
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     public Date getEndDate() {
         return endDate;

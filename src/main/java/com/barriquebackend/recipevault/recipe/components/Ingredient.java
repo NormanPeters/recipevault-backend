@@ -17,7 +17,7 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
-    @JsonBackReference // This helps to prevent infinite recursion during serialization
+    @JsonBackReference
     private Recipe recipe;
 
     public Long getIngredientId() {

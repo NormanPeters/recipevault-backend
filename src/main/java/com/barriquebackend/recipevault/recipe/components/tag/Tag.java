@@ -16,7 +16,7 @@ public class Tag {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
-    @JsonBackReference // Prevents infinite recursion in JSON serialization
+    @JsonBackReference
     private Recipe recipe;
 
     // Getters and Setters
