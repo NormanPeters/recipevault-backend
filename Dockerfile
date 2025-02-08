@@ -4,5 +4,5 @@ WORKDIR /home/gradle/src
 RUN gradle build -x test --no-daemon
 
 FROM eclipse-temurin:21-jdk-jammy
-COPY --from=build /home/gradle/src/build/libs/recipevault-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /home/gradle/src/build/libs/barriquebackend-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT [ "java","-jar","/app.jar"]
