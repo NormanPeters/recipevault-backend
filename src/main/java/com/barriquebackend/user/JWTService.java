@@ -48,7 +48,7 @@ public class JWTService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 10 * 1000)) // 10 minutes
+                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000)) // 24 hours
                 .and()
                 .signWith(getKey())
                 .compact();
