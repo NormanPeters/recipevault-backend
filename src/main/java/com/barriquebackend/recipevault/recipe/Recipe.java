@@ -33,19 +33,19 @@ public class Recipe {
     private int servings;
     private int portionSize;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ingredient> ingredients;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NutritionalValue> nutritionalValues;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RecipeStep> steps;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tool> tools;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags;
 
     // Getters and setters
